@@ -34,4 +34,5 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
 }

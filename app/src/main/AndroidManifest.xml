@@ -20,8 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContentListActivity" />
-        <activity android:name=".ShowContentActivity"></activity>
+        <activity android:name=".ContentListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hair.ibl.fracionados.fracionados.TelaInicialActivity" />
+        </activity>
+        <activity android:name=".ShowContentActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hair.ibl.fracionados.fracionados.ContentListActivity" />
+        </activity>
     </application>
 
 </manifest>

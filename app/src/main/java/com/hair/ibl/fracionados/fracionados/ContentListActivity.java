@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.hair.ibl.fracionados.fracionados.Model.Content.ContentList;
-import com.hair.ibl.fracionados.fracionados.Model.Content.ContentItem;
+import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentList;
+import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentItem;
 import com.hair.ibl.fracionados.fracionados.Service.RetrofitService;
 import com.hair.ibl.fracionados.fracionados.Service.ServiceGenerator;
 
@@ -33,11 +33,16 @@ public class ContentListActivity extends AppCompatActivity {
     ListView lvContents;
     ContentList content_data;
     ProgressDialog dialog;
+    ArrayList<String> ignore;
+    ArrayList<ContentItem> contents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_list);
+
+        ignore = new ArrayList<>();
+        ignore.add("categorias-pagina-inicial");
 
         dialog = ProgressDialog.show(ContentListActivity.this, "Aguarde", "Carregando a  dados...");
 
@@ -50,7 +55,7 @@ public class ContentListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(ContentListActivity.this, ShowContentActivity.class);
-                intent.putExtra("slug", content_data.getData().getContent_item().get(position).getSlug());
+                intent.putExtra("slug", contents.get(position).getSlug());
                 startActivity(intent);
 
             }
@@ -74,7 +79,10 @@ public class ContentListActivity extends AppCompatActivity {
                     if (content_data != null) {
                         List<String> names = new ArrayList<String>();
                         for (ContentItem content_item : content_data.getData().getContent_item()) {
-                            names.add(content_item.getTitle());
+                            if(ignore.indexOf(content_item.getSlug()) < 0){
+                                names.add(content_item.getTitle());
+                                contents.add(content_item);
+                            }
                         }
                         ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(ContentListActivity.this, android.R.layout.simple_list_item_1, names);
                         lvContents.setAdapter(namesAdapter);
@@ -82,6 +90,7 @@ public class ContentListActivity extends AppCompatActivity {
                     } else {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Resposta nula do servidor", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                 } else {
@@ -89,14 +98,16 @@ public class ContentListActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
                     // segura os erros de requisição
                     ResponseBody errorBody = response.errorBody();
+                    finish();
                 }
 
             }
 
             @Override
             public void onFailure(Call<ContentList> call, Throwable t) {
-
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

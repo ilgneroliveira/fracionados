@@ -27,6 +27,16 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btInformation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="#cd1584"
+            android:text="@string/informa_es"
+            android:textColor="#FFF"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,15 +63,6 @@
             android:layout_marginBottom="30dp"
             android:background="#cd1584"
             android:text="@string/curiosidades"
-            android:textColor="#FFF"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btInformation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#cd1584"
-            android:text="@string/informa_es"
             android:textColor="#FFF"
             android:textStyle="bold" />
     </LinearLayout>

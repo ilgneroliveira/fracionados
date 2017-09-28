@@ -1,4 +1,4 @@
-package com.hair.ibl.fracionados.fracionados.Model.Content;
+package com.hair.ibl.fracionados.fracionados.Model.Content.List;
 
 import com.google.gson.annotations.SerializedName;
 

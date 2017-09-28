@@ -1,16 +1,21 @@
-package com.hair.ibl.fracionados.fracionados.Model.Content;
+package com.hair.ibl.fracionados.fracionados.Model.Content.List;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /**
- * Content
+ * ContentItem
  *
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0
  */
-public class Content {
+public class ContentItem {
     private String title;
     private String content;
+    private String slug;
 
-    public Content() {}
+    public ContentItem() {}
 
     public String getTitle() {
         return title;
@@ -26,5 +31,13 @@ public class Content {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }
