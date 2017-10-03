@@ -1,12 +1,10 @@
 package com.hair.ibl.fracionados.fracionados.Model.Content.Show;
 
 import com.google.gson.annotations.SerializedName;
-import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentItem;
-
-import java.util.ArrayList;
+import com.hair.ibl.fracionados.fracionados.Model.Content.List.Content;
 
 /**
- * ContentData
+ * BlogData
  *
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0

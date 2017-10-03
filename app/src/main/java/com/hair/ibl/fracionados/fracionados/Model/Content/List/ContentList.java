@@ -3,7 +3,7 @@ package com.hair.ibl.fracionados.fracionados.Model.Content.List;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * ContentList
+ * BlogList
  *
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0

@@ -1,28 +1,28 @@
-package com.hair.ibl.fracionados.fracionados.Model.Content.Show;
+package com.hair.ibl.fracionados.fracionados.Model.Blog.List;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
- * PostShow
+ * BlogList
  *
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0
  */
-public class ContentShow {
+public class BlogList {
     @SerializedName("data")
-    private ContentData data = new ContentData();
+    private BlogData data = new BlogData();
 
     /**
      * @return The data
      */
-    public ContentData getData() {
+    public BlogData getData() {
         return data;
     }
 
     /**
      * @param data The data
      */
-    public void setData(ContentData data) {
+    public void setData(BlogData data) {
         this.data = data;
     }
 }

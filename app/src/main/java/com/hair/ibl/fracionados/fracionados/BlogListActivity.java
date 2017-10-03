@@ -2,21 +2,20 @@ package com.hair.ibl.fracionados.fracionados;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentList;
-import com.hair.ibl.fracionados.fracionados.Model.Content.List.Content;
+import com.hair.ibl.fracionados.fracionados.Model.Blog.Adapter.PostAdapter;
+import com.hair.ibl.fracionados.fracionados.Model.Blog.List.BlogList;
+import com.hair.ibl.fracionados.fracionados.Model.Blog.List.Post;
 import com.hair.ibl.fracionados.fracionados.Service.RetrofitService;
 import com.hair.ibl.fracionados.fracionados.Service.ServiceGenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -24,75 +23,65 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * ContentListActivity
+ * BlogListActivity
  *
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0
  */
-public class ContentListActivity extends AppCompatActivity {
-    ListView lvContents;
-    ContentList content_data;
+public class BlogListActivity extends AppCompatActivity {
+    ListView lvPosts;
+    BlogList blog_data;
     ProgressDialog dialog;
     ArrayList<String> ignore;
-    ArrayList<Content> contents = new ArrayList<>();
+    ArrayList<Post> posts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_list);
+        setContentView(R.layout.activity_blog_list);
 
-        ignore = new ArrayList<>();
-        ignore.add("categorias-pagina-inicial");
+        dialog = ProgressDialog.show(BlogListActivity.this, "Aguarde", "Carregando a  dados...");
 
-        dialog = ProgressDialog.show(ContentListActivity.this, "Aguarde", "Carregando a  dados...");
+        lvPosts = (ListView) findViewById(R.id.lvPosts);
+        requestPosts();
 
-        lvContents = (ListView) findViewById(R.id.lvContents);
-        requestContents();
-
-        lvContents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvPosts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(ContentListActivity.this, ShowContentActivity.class);
-                intent.putExtra("slug", contents.get(position).getSlug());
+                Intent intent = new Intent(BlogListActivity.this, ShowContentActivity.class);
+                intent.putExtra("slug", posts.get(position).getSlug());
                 startActivity(intent);
 
             }
         });
     }
 
-    private void requestContents() {
+    private void requestPosts() {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-        Call<ContentList> call = service.getAllContents();
+        Call<BlogList> call = service.getAllPosts();
 
-        call.enqueue(new Callback<ContentList>() {
+        call.enqueue(new Callback<BlogList>() {
             @Override
-            public void onResponse(Call<ContentList> call, Response<ContentList> response) {
+            public void onResponse(Call<BlogList> call, Response<BlogList> response) {
 
                 if (response.isSuccessful()) {
 
-                    content_data = response.body();
+                    blog_data = response.body();
 
                     //verifica aqui se o corpo da resposta não é nulo
-                    if (content_data != null) {
-                        List<String> names = new ArrayList<String>();
-                        for (Content content_item : content_data.getData().getContent_item()) {
-                            if(ignore.indexOf(content_item.getSlug()) < 0){
-                                names.add(content_item.getTitle());
-                                contents.add(content_item);
-                            }
-                        }
-                        ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(ContentListActivity.this, android.R.layout.simple_list_item_1, names);
-                        lvContents.setAdapter(namesAdapter);
+                    if (blog_data != null) {
+                        PostAdapter adapter = new PostAdapter(blog_data.getData().getPosts(), BlogListActivity.this);
+
+                        lvPosts.setAdapter(adapter);
                         dialog.dismiss();
                     } else {
                         dialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Resposta nula do servidor", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-
                 } else {
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
@@ -104,7 +93,7 @@ public class ContentListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ContentList> call, Throwable t) {
+            public void onFailure(Call<BlogList> call, Throwable t) {
                 dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
                 finish();

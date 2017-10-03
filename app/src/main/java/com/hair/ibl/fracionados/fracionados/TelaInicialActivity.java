@@ -19,6 +19,7 @@ import android.widget.ListView;
  */
 public class TelaInicialActivity extends AppCompatActivity {
     Button btInformation;
+    Button btCuriosities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,22 @@ public class TelaInicialActivity extends AppCompatActivity {
         }
 
         btInformation = (Button) findViewById(R.id.btInformation);
+        btCuriosities = (Button) findViewById(R.id.btCuriosities);
 
         btInformation.setOnClickListener(new AdapterView.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TelaInicialActivity.this,ContentListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btCuriosities.setOnClickListener(new AdapterView.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TelaInicialActivity.this,BlogListActivity.class);
                 startActivity(intent);
             }
         });
