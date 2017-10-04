@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowContentActivity extends AppCompatActivity {
+/**
+ * ContentShowActivity
+ *
+ * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
+ * @version 1.0
+ */
+public class ContentShowActivity extends AppCompatActivity {
 
     TextView tvTitle;
     TextView tvContent;
@@ -32,7 +37,7 @@ public class ShowContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_content);
 
-        dialog = ProgressDialog.show(ShowContentActivity.this, "Aguarde", "Carregando a  dados...");
+        dialog = ProgressDialog.show(ContentShowActivity.this, "Aguarde", "Carregando a  dados...");
 
         tvTitle = (TextView) findViewById(R.id.tvTitle);
 //        tvContent = (TextView) findViewById(R.id.tvContent);

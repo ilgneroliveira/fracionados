@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hair.ibl.fracionados.fracionados.BlogListActivity;
 import com.hair.ibl.fracionados.fracionados.Model.Blog.List.Post;
 import com.hair.ibl.fracionados.fracionados.R;
 import com.hair.ibl.fracionados.fracionados.Util.ExtractHTMLUtil;
@@ -31,11 +30,13 @@ import java.util.List;
 public class PostAdapter extends BaseAdapter {
     private final List<Post> posts;
     private final Activity act;
-    private ImageView imagem;
+    private List<ImageView> images;
+    private int i = 0;
 
     public PostAdapter(ArrayList<Post> posts, Activity act) {
         this.posts = posts;
         this.act = act;
+        images = new ArrayList<>();
     }
 
     @Override
@@ -59,21 +60,25 @@ public class PostAdapter extends BaseAdapter {
         Post post = posts.get(position);
 
         //pegando as referências das Views
-        TextView nome = (TextView) view.findViewById(R.id.lista_curso_personalizada_nome);
-        TextView descricao = (TextView) view.findViewById(R.id.lista_curso_personalizada_descricao);
-        imagem = (ImageView) view.findViewById(R.id.lista_curso_personalizada_imagem);
+        TextView nome = view.findViewById(R.id.lista_curso_personalizada_nome);
+        TextView descricao = view.findViewById(R.id.lista_curso_personalizada_descricao);
+        ImageView imagem = view.findViewById(R.id.lista_curso_personalizada_imagem);
+        images.add(imagem);
 
         //populando as Views
         nome.setText(post.getTitle());
 
         ExtractHTMLUtil extractHTMLUtil = new ExtractHTMLUtil();
-        descricao.setText(extractHTMLUtil.replaceAcutesHTML(post.getDescription().replaceAll("<.*?>","")));
-        new DownloadImagemAsyncTask().execute(post.getImage_path());
+        descricao.setText(extractHTMLUtil.replaceAcutesHTML(post.getDescription().replaceAll("<.*?>", "")));
+        new DownloadImagemAsyncTask().execute(post.getImage_path(), i + "");
+        i++;
 
         return view;
     }
 
     private class DownloadImagemAsyncTask extends AsyncTask<String, Void, Bitmap> {
+        private ImageView imagem_async;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -81,8 +86,8 @@ public class PostAdapter extends BaseAdapter {
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            String urlString = "http://assets.izap.com.br/multifracionados.com.br/plus/images?src="+params[0]+"&mode=max&width=480&height=480";
-
+            String urlString = "http://assets.izap.com.br/multifracionados.com.br/plus/images?src=" + params[0] + "&mode=max&width=480&height=480";
+            imagem_async = images.get(Integer.parseInt(params[1]));
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection conexao = (HttpURLConnection)
@@ -104,12 +109,12 @@ public class PostAdapter extends BaseAdapter {
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
             if (result != null) {
-                imagem.setImageBitmap(result);
+                imagem_async.setImageBitmap(result);
             } else {
                 AlertDialog.Builder builder =
                         new AlertDialog.Builder(act).
                                 setTitle("Erro").
-                                setMessage("Não foi possivel carregar imagem, tente novamente mais tarde!").
+                                setMessage("Não foi possivel carregar imagem_async, tente novamente mais tarde!").
                                 setPositiveButton("OK", null);
                 builder.create().show();
             }

@@ -50,7 +50,7 @@ public class BlogListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(BlogListActivity.this, ShowContentActivity.class);
+                Intent intent = new Intent(BlogListActivity.this, ContentShowActivity.class);
                 intent.putExtra("slug", posts.get(position).getSlug());
                 startActivity(intent);
 

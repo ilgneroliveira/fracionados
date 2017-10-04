@@ -20,6 +20,7 @@ import android.widget.ListView;
 public class TelaInicialActivity extends AppCompatActivity {
     Button btInformation;
     Button btCuriosities;
+    Button btTests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class TelaInicialActivity extends AppCompatActivity {
 
         btInformation = (Button) findViewById(R.id.btInformation);
         btCuriosities = (Button) findViewById(R.id.btCuriosities);
+        btTests = (Button) findViewById(R.id.btTests);
 
         btInformation.setOnClickListener(new AdapterView.OnClickListener() {
 
@@ -50,6 +52,15 @@ public class TelaInicialActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TelaInicialActivity.this,BlogListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btTests.setOnClickListener(new AdapterView.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TelaInicialActivity.this,ContactListActivity.class);
                 startActivity(intent);
             }
         });

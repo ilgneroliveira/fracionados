@@ -10,10 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentList;
+import com.hair.ibl.fracionados.fracionados.Model.Contact.List.Form;
 import com.hair.ibl.fracionados.fracionados.Model.Content.List.Content;
+import com.hair.ibl.fracionados.fracionados.Model.Content.Show.ContentShow;
 import com.hair.ibl.fracionados.fracionados.Service.RetrofitService;
 import com.hair.ibl.fracionados.fracionados.Service.ServiceGenerator;
+import com.hair.ibl.fracionados.fracionados.Util.ExtractHTMLUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,69 +25,62 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * ContentListActivity
- *
- * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
- * @version 1.0
- */
-public class ContentListActivity extends AppCompatActivity {
-    ListView lvContents;
-    ContentList content_data;
+public class ContactListActivity extends AppCompatActivity {
+    ListView lvContact;
+    ContentShow content_show;
     ProgressDialog dialog;
-    ArrayList<String> ignore;
-    ArrayList<Content> contents = new ArrayList<>();
+    ArrayList<String> slugs = new ArrayList<>();
+    ArrayList<Form> forms = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_list);
+        setContentView(R.layout.activity_list_contact);
 
-        ignore = new ArrayList<>();
-        ignore.add("categorias-pagina-inicial");
+        dialog = ProgressDialog.show(ContactListActivity.this, "Aguarde", "Carregando a  dados...");
 
-        dialog = ProgressDialog.show(ContentListActivity.this, "Aguarde", "Carregando a  dados...");
+        lvContact = (ListView) findViewById(R.id.lvContact);
+        requestContact("testes");
 
-        lvContents = (ListView) findViewById(R.id.lvContents);
-        requestContents();
-
-        lvContents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(ContentListActivity.this, ContentShowActivity.class);
-                intent.putExtra("slug", contents.get(position).getSlug());
+                Intent intent = new Intent(ContactListActivity.this, ContactShowActivity.class);
+                intent.putExtra("slug", slugs.get(position));
                 startActivity(intent);
 
             }
         });
     }
 
-    private void requestContents() {
+    private void requestContact(String slug) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
 
-        Call<ContentList> call = service.getAllContents();
+        Call<ContentShow> call = service.getContent(slug);
 
-        call.enqueue(new Callback<ContentList>() {
+        call.enqueue(new Callback<ContentShow>() {
             @Override
-            public void onResponse(Call<ContentList> call, Response<ContentList> response) {
+            public void onResponse(Call<ContentShow> call, Response<ContentShow> response) {
 
                 if (response.isSuccessful()) {
 
-                    content_data = response.body();
+                    content_show = response.body();
 
                     //verifica aqui se o corpo da resposta não é nulo
-                    if (content_data != null) {
+                    if (content_show != null) {
+
+                        ExtractHTMLUtil extractHTMLUtil = new ExtractHTMLUtil();
+                        forms = extractHTMLUtil.splitForms(content_show.getData().getContent().getContent());
+
                         List<String> names = new ArrayList<String>();
-                        for (Content content_item : content_data.getData().getContent_item()) {
-                            if(ignore.indexOf(content_item.getSlug()) < 0){
-                                names.add(content_item.getTitle());
-                                contents.add(content_item);
-                            }
+                        for (Form form : forms) {
+                            names.add(form.getTitle());
+                            slugs.add(form.getSlug());
                         }
-                        ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(ContentListActivity.this, android.R.layout.simple_list_item_1, names);
-                        lvContents.setAdapter(namesAdapter);
+                        ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(ContactListActivity.this, android.R.layout.simple_list_item_1, names);
+                        lvContact.setAdapter(namesAdapter);
                         dialog.dismiss();
                     } else {
                         dialog.dismiss();
@@ -104,7 +99,7 @@ public class ContentListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ContentList> call, Throwable t) {
+            public void onFailure(Call<ContentShow> call, Throwable t) {
                 dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
                 finish();

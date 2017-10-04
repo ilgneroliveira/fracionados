@@ -1,5 +1,9 @@
 package com.hair.ibl.fracionados.fracionados.Util;
 
+import com.hair.ibl.fracionados.fracionados.Model.Contact.List.Form;
+
+import java.util.ArrayList;
+
 /**
  * ExtractHTMLUtil
  *
@@ -40,5 +44,14 @@ public class ExtractHTMLUtil {
         str = str.replaceAll("&nbsp;", " ");
 
         return str;
+    }
+
+    public ArrayList<Form> splitForms(String str) {
+        ArrayList<Form> forms = new ArrayList<>();
+        for (String form: str.split("\n")) {
+            forms.add(new Form(form.split("=")));
+        }
+
+        return forms;
     }
 }

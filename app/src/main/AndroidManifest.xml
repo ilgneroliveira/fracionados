@@ -25,7 +25,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hair.ibl.fracionados.fracionados.TelaInicialActivity" />
         </activity>
-        <activity android:name=".ShowContentActivity">
+        <activity android:name=".ContentShowActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hair.ibl.fracionados.fracionados.ContentListActivity" />
@@ -33,7 +33,17 @@
         <activity android:name=".BlogListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hair.ibl.fracionados.fracionados.ContentListActivity" />
+                android:value="com.hair.ibl.fracionados.fracionados.TelaInicialActivity" />
+        </activity>
+        <activity android:name=".ContactListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hair.ibl.fracionados.fracionados.TelaInicialActivity" />
+        </activity>
+        <activity android:name=".ContactShowActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hair.ibl.fracionados.fracionados.ContactListActivity" />
         </activity>
     </application>
 
