@@ -22,13 +22,16 @@
             android:id="@+id/lista_curso_personalizada_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="Titulo"
+            android:textColor="@android:color/background_dark"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/lista_curso_personalizada_descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/background_dark"
             android:text="descriçao"
             android:textSize="10sp" />
 

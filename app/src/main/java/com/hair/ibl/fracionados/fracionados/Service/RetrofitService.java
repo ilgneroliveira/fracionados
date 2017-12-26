@@ -2,6 +2,7 @@ package com.hair.ibl.fracionados.fracionados.Service;
 
 import com.hair.ibl.fracionados.fracionados.Model.Blog.List.BlogList;
 import com.hair.ibl.fracionados.fracionados.Model.Blog.Show.PostShow;
+import com.hair.ibl.fracionados.fracionados.Model.Contact.Show.ContactShow;
 import com.hair.ibl.fracionados.fracionados.Model.Content.List.ContentList;
 import com.hair.ibl.fracionados.fracionados.Model.Content.Show.ContentShow;
 
@@ -27,4 +28,7 @@ public interface RetrofitService {
 
     @GET("posts/{slug}?format=json")
     Call<PostShow> getPost(@Path("slug") String slug);
+
+    @GET("{slug}?format=json")
+    Call<ContactShow> getContact(@Path("slug") String slug);
 }

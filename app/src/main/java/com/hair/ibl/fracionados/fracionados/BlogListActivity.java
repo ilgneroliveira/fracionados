@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.hair.ibl.fracionados.fracionados.Model.Blog.Adapter.PostAdapter;
 import com.hair.ibl.fracionados.fracionados.Model.Blog.List.BlogList;
 import com.hair.ibl.fracionados.fracionados.Model.Blog.List.Post;
+import com.hair.ibl.fracionados.fracionados.Model.Contact.List.Form;
 import com.hair.ibl.fracionados.fracionados.Service.RetrofitService;
 import com.hair.ibl.fracionados.fracionados.Service.ServiceGenerator;
 
@@ -32,7 +33,7 @@ public class BlogListActivity extends AppCompatActivity {
     ListView lvPosts;
     BlogList blog_data;
     ProgressDialog dialog;
-    ArrayList<String> ignore;
+    ArrayList<String> slugs = new ArrayList<>();
     ArrayList<Post> posts = new ArrayList<>();
 
     @Override
@@ -50,8 +51,8 @@ public class BlogListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(BlogListActivity.this, ContentShowActivity.class);
-                intent.putExtra("slug", posts.get(position).getSlug());
+                Intent intent = new Intent(BlogListActivity.this, PostShowActivity.class);
+                intent.putExtra("slug", slugs.get(position));
                 startActivity(intent);
 
             }
@@ -74,6 +75,10 @@ public class BlogListActivity extends AppCompatActivity {
                     //verifica aqui se o corpo da resposta não é nulo
                     if (blog_data != null) {
                         PostAdapter adapter = new PostAdapter(blog_data.getData().getPosts(), BlogListActivity.this);
+
+                        for (Post post : blog_data.getData().getPosts()) {
+                            slugs.add(post.getSlug());
+                        }
 
                         lvPosts.setAdapter(adapter);
                         dialog.dismiss();

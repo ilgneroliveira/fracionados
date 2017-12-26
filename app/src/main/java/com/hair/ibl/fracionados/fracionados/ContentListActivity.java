@@ -43,6 +43,7 @@ public class ContentListActivity extends AppCompatActivity {
 
         ignore = new ArrayList<>();
         ignore.add("categorias-pagina-inicial");
+        ignore.add("testes");
 
         dialog = ProgressDialog.show(ContentListActivity.this, "Aguarde", "Carregando a  dados...");
 

@@ -1,7 +1,6 @@
 package com.hair.ibl.fracionados.fracionados.Model.Blog.Show;
 
 import com.google.gson.annotations.SerializedName;
-import com.hair.ibl.fracionados.fracionados.Model.Blog.List.Post;
 
 import java.util.ArrayList;
 
@@ -12,20 +11,20 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class BlogData {
-    @SerializedName("posts")
-    private ArrayList<Post> posts = new ArrayList<>();
+    @SerializedName("post")
+    private Post post = new Post();
 
     /**
      * @return The posts
      */
-    public ArrayList<Post> getPosts() {
-        return posts;
+    public Post getPost() {
+        return post;
     }
 
     /**
-     * @param posts The posts
+     * @param post The post
      */
-    public void setPosts(ArrayList<Post> posts) {
-        this.posts = posts;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top|bottom"
+    android:layout_margin="10sp"
+    android:orientation="vertical"
+    tools:context="com.hair.ibl.fracionados.fracionados.ContentListActivity"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="8dp">
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Titulo"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+    <com.bluejamesbond.text.DocumentView
+        android:id="@+id/dvContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/background_dark"
+        app:documentView_textAlignment="justified"
+        app:documentView_textSize="16sp" />
+
+</LinearLayout>

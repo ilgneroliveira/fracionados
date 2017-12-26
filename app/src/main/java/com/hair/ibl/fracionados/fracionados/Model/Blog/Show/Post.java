@@ -9,6 +9,8 @@ package com.hair.ibl.fracionados.fracionados.Model.Blog.Show;
 public class Post {
     private String title;
     private String content;
+    private String slug;
+    private String image_path;
 
     public Post() {}
 
@@ -26,5 +28,21 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 }

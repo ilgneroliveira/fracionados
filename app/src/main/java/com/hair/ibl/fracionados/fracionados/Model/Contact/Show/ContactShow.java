@@ -8,21 +8,21 @@ import com.google.gson.annotations.SerializedName;
  * @author Ilgner Fagundes <ilgner.fagundes@multifracionados.com.br>
  * @version 1.0
  */
-public class ContentShow {
+public class ContactShow {
     @SerializedName("data")
-    private ContentData data = new ContentData();
+    private ContactData data = new ContactData();
 
     /**
      * @return The data
      */
-    public ContentData getData() {
+    public ContactData getData() {
         return data;
     }
 
     /**
      * @param data The data
      */
-    public void setData(ContentData data) {
+    public void setData(ContactData data) {
         this.data = data;
     }
 }
